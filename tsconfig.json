@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "strictFunctionTypes": true,
+        "alwaysStrict": true,
+        "strictNullChecks": true,
+        "declaration": true,
+        "noImplicitAny": true,
+        "target": "es2015",
+        "outDir": "bin",
+        "rootDir": "src",
+        "module": "commonjs"
+    },
+    "include": [
+        "./src/**/*.ts"
+    ]
+}

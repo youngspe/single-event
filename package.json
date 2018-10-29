@@ -1,0 +1,11 @@
+{
+  "name": "single-event",
+  "version": "0.1.0",
+  "description": "Create objects that broadcast events to a set of listeners.",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "youngspe",
+  "license": "MIT"
+}
