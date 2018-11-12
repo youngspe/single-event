@@ -1,4 +1,4 @@
-type Listener<A, S> = (args: A, src: S) => void;
+type Listener<A, S> = (args: A, sender: S) => void;
 
 abstract class SuperEvent<A, B, S> implements singleEvent.SingleEvent<B, S> {
     private readonly _listeners = new Set<Listener<B, S>>();
@@ -151,20 +151,20 @@ class MapEvent<A, B, S> extends SuperEvent<A, B, S> {
  * This value will be passed to listeners each time the event fires.
  * This can be used to distinguish the source of the event when the same listener is added to
  * multiple events.
- * @param connect
+ * @param onConnect
  * This function will be called any time a listener is added when the event previously had no
  * listeners.
  * This can be used to perform setup operations or aquire resources that are only needed while the
  * event has listeners.
- * @param disconnect
+ * @param onDisconnect
  * This function will be called when a listener is removed and as a result the event no longer has
  * any listeners.
  * This can be used to perform cleanup operations and release resources that are only needed while
  * the event has listeners.
  * @returns {[singleEvent.SingleEvent<A, S>, (a: A) => void]}
  */
-export function singleEvent<A, S = undefined>(sender: S, connect = () => { }, disconnect = () => { }): [singleEvent.SingleEvent<A, S>, (a: A) => void] {
-    return SingleEventSource.create(sender, connect, disconnect);
+export function singleEvent<A, S = undefined>(sender: S, onConnect = () => { }, onDisconnect = () => { }): [singleEvent.SingleEvent<A, S>, (a: A) => void] {
+    return SingleEventSource.create(sender, onConnect, onDisconnect);
 }
 
 export namespace singleEvent {
@@ -181,23 +181,23 @@ export namespace singleEvent {
         /**
          * Adds an event listener.
          *
-         * @param l
+         * @param listener
          * The listener to add.
          * 
          * @memberof SingleEvent
          */
-        listen(l: Listener<A, S>): void;
+        listen(listener: Listener<A, S>): void;
         /**
          * Removes an event listener.
          *
-         * @param l
+         * @param listener
          * The listener to remove.
          * If it was previously added as a listener of the event, it will no longer be invoked when
          * the event fires.
          * Additionally the listener will be removed from any child events.
          * @memberof SingleEvent
          */
-        unlisten(l: Listener<A, S>): void;
+        unlisten(listener: Listener<A, S>): void;
         /**
          * Returns a promise that will be fulfilled the next time the event fires.
          * 
